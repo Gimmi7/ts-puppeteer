@@ -14,7 +14,7 @@ let browser: Browser;
 async function launchBrowser() {
   if (process.env.NODE_ENV === 'dev') {
     /* @ts-ignore */
-    browser = await puppeteer.launch({ headless: false, devtools: true, defaultViewport: { width: 1920, height: 1080 } });
+    browser = await puppeteer.launch({ headless: false, devtools: true, defaultViewport: { width: 1920, height: 1080 }, args: ['--autoplay-policy=no-user-gesture-required'] });
   } else {
     browser = await puppeteer.launch();
   }
@@ -23,14 +23,6 @@ async function launchBrowser() {
 
 launchBrowser();
 
-
-// 定义Navigator没有的属性
-declare global {
-  interface Navigator {
-    __proto__: any;
-    chrome: {};
-  }
-}
 
 const filterMethods: Set<string> = new Set(["head", "options", "trace"]);
 export { filterMethods };
